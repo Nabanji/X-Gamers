@@ -3,9 +3,9 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 export default function Register() {
   return (
-    <View className="flex-1 items-center justify-center bg-black">
+    <View className="flex-1 items-center justify-center bg-white">
       
-      <Text className="text-white text-2xl font-bold">
+      <Text className="text-black text-2xl font-bold">
         Create Account
       </Text>
 

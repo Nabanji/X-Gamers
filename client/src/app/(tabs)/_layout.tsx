@@ -8,6 +8,10 @@ export default function TabsLayout() {
         <NativeTabs.Trigger.Icon sf="house.fill" />
       </NativeTabs.Trigger>
 
+      <NativeTabs.Trigger name="games">
+        <NativeTabs.Trigger.Label>Games</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="gamecontroller.fill" />
+      </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="history">
         <NativeTabs.Trigger.Label>History</NativeTabs.Trigger.Label>
