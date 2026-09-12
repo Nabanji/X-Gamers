@@ -1,17 +1,14 @@
+import { useMemo } from "react";
+import { useRouter } from "expo-router";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useGames } from "./Home/GameContext";
 
 const user = {
   name: "James Mwangi",
   email: "james.mwangi@example.com",
   role: "Hub Owner",
   joined: "Jan 2025",
-};
-
-const stats = {
-  totalGames: 248,
-  totalRevenue: 74200,
-  unpaidTotal: 1800,
 };
 
 function StatBlock({ label, value }: { label: string; value: string | number }) {
@@ -28,14 +25,20 @@ function MenuRow({
   label,
   color = "#111827",
   showChevron = true,
+  onPress,
 }: {
   icon: keyof typeof Ionicons.glyphMap;
   label: string;
   color?: string;
   showChevron?: boolean;
+  onPress?: () => void;
 }) {
   return (
-    <TouchableOpacity activeOpacity={0.7} className="flex-row items-center justify-between py-3.5 px-4">
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={onPress}
+      className="flex-row items-center justify-between py-3.5 px-4"
+    >
       <View className="flex-row items-center flex-1">
         <View
           className="w-9 h-9 rounded-full items-center justify-center mr-3"
@@ -61,6 +64,19 @@ function MenuGroup({ children }: { children: React.ReactNode }) {
 }
 
 export default function ProfileScreen() {
+  const router = useRouter();
+  const { games } = useGames();
+  const stats = useMemo(
+    () => ({
+      totalGames: games.length,
+      totalRevenue: games.reduce((sum, game) => sum + game.amount, 0),
+      unpaidTotal: games
+        .filter((game) => !game.player1Paid || !game.player2Paid)
+        .reduce((sum, game) => sum + game.amount, 0),
+    }),
+    [games]
+  );
+
   return (
     <View className="flex-1 bg-gray-50">
       <ScrollView
@@ -118,7 +134,13 @@ export default function ProfileScreen() {
 
         {/* Logout */}
         <MenuGroup>
-          <MenuRow icon="log-out-outline" label="Log Out" color="#DC2626" showChevron={false} />
+          <MenuRow
+            icon="log-out-outline"
+            label="Log Out"
+            color="#DC2626"
+            showChevron={false}
+            onPress={() => router.replace("/(auth)/Login")}
+          />
         </MenuGroup>
 
         <Text className="text-gray-300 text-xs text-center mt-2">Member since {user.joined}</Text>
