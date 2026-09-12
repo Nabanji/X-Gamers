@@ -22,6 +22,7 @@ export const initialGames: GameSession[] = [
     player2Wins: 1,
     winner: "player1",
     pricePerGame: 150,
+    createdAt: Date.now() - 15 * 60 * 1000,
   },
   {
     id: "2",
@@ -37,5 +38,6 @@ export const initialGames: GameSession[] = [
     time: "10:10 AM",
     detail: "2 hrs",
     winner: "player2",
+    createdAt: Date.now() - 50 * 60 * 1000,
   },
 ];

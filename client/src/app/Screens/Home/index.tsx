@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
+import { useRouter } from "expo-router";
 import { View, ScrollView, Text, TouchableOpacity, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { GameSession, StatFilter } from "./types";
-import { initialGames } from "./constants";
 import { getBill } from "./utils/billing";
 
 import { StatCard } from "./components/StatCard";
@@ -11,10 +11,12 @@ import { GameListItem } from "./components/GameListItem";
 import { StatDetailModal } from "./components/StatDetailModal";
 import { GameBillModal } from "./components/GameBillModal";
 import { NewGameModal } from "./components/NewGameModal";
+import { useGames } from "./GameContext";
 
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [games, setGames] = useState<GameSession[]>(initialGames);
+  const router = useRouter();
+  const { games, setGames } = useGames();
   const [statFilter, setStatFilter] = useState<StatFilter>(null);
   const [statModalVisible, setStatModalVisible] = useState(false);
   const [billModalVisible, setBillModalVisible] = useState(false);
@@ -45,14 +47,23 @@ export default function HomeScreen() {
   }, [games]);
 
   const handleAddGame = (
-    session: Omit<GameSession, "id" | "time" | "player1Paid" | "player2Paid">
+    session: Omit<GameSession, "id" | "time" | "createdAt" | "player1Paid" | "player2Paid">
   ) => {
-    const time = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    const time = new Date().toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
     setGames((prev) => [
-      { ...session, id: Date.now().toString(), time, player1Paid: false, player2Paid: false },
+      { ...session, id: Date.now().toString(), time, createdAt: Date.now(), player1Paid: false, player2Paid: false },
       ...prev,
     ]);
   };
+
+  const recentGames = useMemo(
+    () => [...games].sort((a, b) => b.createdAt - a.createdAt).slice(0, 3),
+    [games]
+  );
 
   const openStatDetail = (filter: StatFilter) => {
     setStatFilter(filter);
@@ -116,13 +127,13 @@ export default function HomeScreen() {
 
         <View className="flex-row items-center justify-between mb-3">
           <Text className="text-black text-lg font-bold">Recent Games</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push("/games")}>
             <Text className="text-indigo-600 text-sm font-medium">See all</Text>
           </TouchableOpacity>
         </View>
 
         <FlatList
-          data={games}
+          data={recentGames}
           scrollEnabled={false}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <GameListItem item={item} onPress={openBill} />}

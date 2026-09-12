@@ -11,6 +11,11 @@ export function GameListItem({
   onPress: (item: GameSession) => void;
 }) {
   const bill = getBill(item);
+  const loggedDate = new Date(item.createdAt).toLocaleDateString([], {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 
   return (
     <TouchableOpacity
@@ -26,7 +31,7 @@ export function GameListItem({
           <View className="flex-1">
             <Text className="text-black font-semibold text-base">{item.gameName}</Text>
             <Text className="text-gray-400 text-xs mt-0.5">
-              {item.station} • {item.detail} • {item.time}
+              {item.station} • {item.detail} • {loggedDate} • {item.time}
             </Text>
 
             <View className="flex-row items-center mt-2">

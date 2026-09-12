@@ -24,7 +24,7 @@ export function NewGameModal({
 }: {
   visible: boolean;
   onClose: () => void;
-  onSubmit: (session: Omit<GameSession, "id" | "time" | "player1Paid" | "player2Paid">) => void;
+  onSubmit: (session: Omit<GameSession, "id" | "time" | "createdAt" | "player1Paid" | "player2Paid">) => void;
 }) {
   const insets = useSafeAreaInsets();
 

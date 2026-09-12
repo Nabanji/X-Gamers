@@ -18,6 +18,7 @@ export type GameSession = {
   player1Wins?: number;
   player2Wins?: number;
   pricePerGame?: number;
+  createdAt: number;
 };
 
 export type StatFilter = "all" | "paid" | "unpaid" | null;
