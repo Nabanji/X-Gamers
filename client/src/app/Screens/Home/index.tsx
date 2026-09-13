@@ -86,7 +86,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <View className="flex-1 bg-gray-50">
+    <View className="flex-1 bg-gray-50 dark:bg-gray-950">
       <ScrollView
         className="flex-1"
         contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 60, paddingBottom: 24 }}
@@ -95,10 +95,10 @@ export default function HomeScreen() {
         <View className="flex-row items-center justify-between mb-6">
           <View>
             <Text className="text-gray-400 text-sm">Welcome back 👋</Text>
-            <Text className="text-black text-2xl font-bold mt-0.5">Game Hub</Text>
+            <Text className="text-black dark:text-white text-2xl font-bold mt-0.5">Game Hub</Text>
           </View>
-          <TouchableOpacity className="w-11 h-11 rounded-full bg-white items-center justify-center border border-gray-100">
-            <Ionicons name="notifications-outline" size={20} color="#111827" />
+          <TouchableOpacity className="w-11 h-11 rounded-full bg-white dark:bg-gray-900 items-center justify-center border border-gray-100 dark:border-gray-800">
+            <Ionicons name="notifications-outline" size={20} color="#9CA3AF" />
           </TouchableOpacity>
         </View>
 
@@ -126,7 +126,7 @@ export default function HomeScreen() {
         </TouchableOpacity>
 
         <View className="flex-row items-center justify-between mb-3">
-          <Text className="text-black text-lg font-bold">Recent Games</Text>
+          <Text className="text-black dark:text-white text-lg font-bold">Recent Games</Text>
           <TouchableOpacity onPress={() => router.push("/games")}>
             <Text className="text-indigo-600 text-sm font-medium">See all</Text>
           </TouchableOpacity>
