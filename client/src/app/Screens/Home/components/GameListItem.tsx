@@ -21,7 +21,7 @@ export function GameListItem({
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={() => onPress(item)}
-      className="bg-white rounded-xl p-4 mb-3 border border-gray-100"
+      className="bg-white dark:bg-gray-900 rounded-xl p-4 mb-3 border border-gray-100 dark:border-gray-800"
     >
       <View className="flex-row items-center">
         <View className="flex-row items-center flex-1">
@@ -29,7 +29,7 @@ export function GameListItem({
             <Ionicons name="game-controller" size={20} color="#4F46E5" />
           </View>
           <View className="flex-1">
-            <Text className="text-black font-semibold text-base">{item.gameName}</Text>
+            <Text className="text-black dark:text-white font-semibold text-base">{item.gameName}</Text>
             <Text className="text-gray-400 text-xs mt-0.5">
               {item.station} • {item.detail} • {loggedDate} • {item.time}
             </Text>
@@ -59,7 +59,7 @@ export function GameListItem({
         </View>
 
         <View className="items-end ml-2">
-          <Text className="text-black font-semibold">KES {item.amount}</Text>
+          <Text className="text-black dark:text-white font-semibold">KES {item.amount}</Text>
           <View className={`mt-1 px-2 py-0.5 rounded-full ${item.player1Paid && item.player2Paid ? "bg-green-50" : "bg-red-50"}`}>
             <Text className={`text-xs font-medium ${item.player1Paid && item.player2Paid ? "text-green-600" : "text-red-600"}`}>
               {item.player1Paid && item.player2Paid ? "Paid" : "Unpaid"}

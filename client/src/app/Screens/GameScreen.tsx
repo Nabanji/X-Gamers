@@ -23,7 +23,7 @@ export default function GamesScreen() {
   };
 
   return (
-    <View className="flex-1 bg-gray-50">
+    <View className="flex-1 bg-gray-50 dark:bg-gray-950">
       <ScrollView
         className="flex-1"
         contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 60, paddingBottom: 24 }}
@@ -31,7 +31,7 @@ export default function GamesScreen() {
       >
         {/* Header */}
         <View className="flex-row items-center justify-between mb-6">
-          <Text className="text-black text-2xl font-bold">All Games</Text>
+          <Text className="text-black dark:text-white text-2xl font-bold">All Games</Text>
         </View>
 
         {sortedGames.map((game) => (

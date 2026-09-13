@@ -35,14 +35,14 @@ function GameRow({ item, onPress }: { item: GameSession; onPress: () => void }) 
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={onPress}
-      className="flex-row items-center justify-between bg-white rounded-xl p-4 mb-3 border border-gray-100"
+      className="flex-row items-center justify-between bg-white dark:bg-gray-900 rounded-xl p-4 mb-3 border border-gray-100 dark:border-gray-800"
     >
       <View className="flex-row items-center flex-1">
         <View className="w-11 h-11 rounded-full bg-indigo-50 items-center justify-center mr-3">
           <Ionicons name="game-controller" size={20} color="#4F46E5" />
         </View>
         <View className="flex-1">
-          <Text className="text-black font-semibold text-base">{item.gameName}</Text>
+          <Text className="text-black dark:text-white font-semibold text-base">{item.gameName}</Text>
           <Text className="text-gray-400 text-xs mt-0.5">
             2 players • {getDateLabel(item.createdAt)} • {item.time}
           </Text>
@@ -50,7 +50,7 @@ function GameRow({ item, onPress }: { item: GameSession; onPress: () => void }) 
       </View>
 
       <View className="items-end ml-2">
-        <Text className="text-black font-semibold">KES {item.amount}</Text>
+        <Text className="text-black dark:text-white font-semibold">KES {item.amount}</Text>
         <View
           className={`mt-1 px-2 py-0.5 rounded-full ${
             isPaid ? "bg-green-50" : "bg-red-50"
@@ -75,7 +75,7 @@ function FilterPill({ label, active, onPress }: { label: string; active: boolean
       activeOpacity={0.8}
       onPress={onPress}
       className={`px-4 py-2.5 rounded-xl mr-2 ${
-        active ? "bg-indigo-600" : "bg-white border border-gray-200"
+        active ? "bg-indigo-600" : "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700"
       }`}
     >
       <Text className={`text-sm font-medium ${active ? "text-white" : "text-gray-500"}`}>
@@ -141,11 +141,11 @@ export default function HistoryScreen() {
     .reduce((sum, game) => sum + game.amount, 0);
 
   return (
-    <View className="flex-1 bg-gray-50">
+    <View className="flex-1 bg-gray-50 dark:bg-gray-950">
       <View style={{ paddingHorizontal: 16, paddingTop: 60 }}>
         {/* Header */}
         <View className="flex-row items-center justify-between mb-5">
-          <Text className="text-black text-2xl font-bold">History</Text>
+          <Text className="text-black dark:text-white text-2xl font-bold">History</Text>
           <View className="bg-red-50 px-3 py-1.5 rounded-full flex-row items-center">
             <Ionicons name="alert-circle" size={14} color="#DC2626" />
             <Text className="text-red-600 text-xs font-medium ml-1">
@@ -155,14 +155,14 @@ export default function HistoryScreen() {
         </View>
 
         {/* Search */}
-        <View className="flex-row items-center bg-white rounded-xl px-3 border border-gray-100 mb-4">
+        <View className="flex-row items-center bg-white dark:bg-gray-900 rounded-xl px-3 border border-gray-100 dark:border-gray-800 mb-4">
           <Ionicons name="search-outline" size={18} color="#9CA3AF" />
           <TextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
             placeholder="Search games..."
             placeholderTextColor="#9CA3AF"
-            className="flex-1 py-3 px-2 text-black"
+            className="flex-1 py-3 px-2 text-black dark:text-white"
           />
         </View>
 
@@ -171,7 +171,7 @@ export default function HistoryScreen() {
           <Text className="text-gray-500 text-xs font-semibold uppercase tracking-wide mb-2">
             Payment status
           </Text>
-          <View className="flex-row bg-white rounded-xl p-1 border border-gray-100">
+          <View className="flex-row bg-white dark:bg-gray-900 rounded-xl p-1 border border-gray-100 dark:border-gray-800">
             {[
               { label: "All", value: "all" as const },
               { label: "Paid", value: "paid" as const },
