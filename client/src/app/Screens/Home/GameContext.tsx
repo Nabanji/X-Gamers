@@ -35,6 +35,8 @@ type GameContextValue = {
 
   gameOptions: GameOption[];
   setGameOptions: Dispatch<SetStateAction<GameOption[]>>;
+  stations: string[];
+  setStationCount: (count: number) => void;
 
   openSession: (data: NewSessionInput) => void;
 
@@ -60,6 +62,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
       active: true,
     }))
   );
+  const [stationCount, setStationCountState] = useState(6);
+  const stations = Array.from({ length: stationCount }, (_, index) => `Station ${index + 1}`);
+
+  const setStationCount = (count: number) => {
+    setStationCountState(Math.max(1, Math.floor(count)));
+  };
 
   /**
    * OPEN A NEW CUSTOMER SESSION
@@ -185,6 +193,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
         gameOptions,
         setGameOptions,
+        stations,
+        setStationCount,
 
         openSession,
         recordLoss,

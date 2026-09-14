@@ -1,8 +1,10 @@
 import { useMemo } from "react";
 import { useRouter } from "expo-router";
+import { useClerk } from "@clerk/expo";
 import { useColorScheme, View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useGames } from "./Home/GameContext";
+import { getSessionTally } from "./Home/utils/sessionBilling";
 import { useTheme } from "../ThemeContext";
 
 const user = {
@@ -78,17 +80,34 @@ function MenuGroup({ children }: { children: React.ReactNode }) {
 
 export default function ProfileScreen() {
   const router = useRouter();
+  const { signOut } = useClerk();
   const { games } = useGames();
   const stats = useMemo(
-    () => ({
-      totalGames: games.length,
-      totalRevenue: games.reduce((sum, game) => sum + game.amount, 0),
-      unpaidTotal: games
-        .filter((game) => !game.player1Paid || !game.player2Paid)
-        .reduce((sum, game) => sum + game.amount, 0),
-    }),
+    () =>
+      games.reduce(
+        (totals, game) => {
+          const tally = getSessionTally(game);
+          const unpaidAmount = tally.isPerGame
+            ? (game.player1Paid ? 0 : tally.p1Owes) + (game.player2Paid ? 0 : tally.p2Owes)
+            : game.player1Paid && game.player2Paid
+            ? 0
+            : tally.totalOwed;
+
+          return {
+            totalGames: totals.totalGames + 1,
+            totalRevenue: totals.totalRevenue + tally.totalOwed,
+            unpaidTotal: totals.unpaidTotal + unpaidAmount,
+          };
+        },
+        { totalGames: 0, totalRevenue: 0, unpaidTotal: 0 }
+      ),
     [games]
   );
+
+  const handleLogout = async () => {
+    await signOut();
+    router.replace("/(auth)/Login");
+  };
 
   return (
     <View className="flex-1 bg-gray-50 dark:bg-gray-950">
@@ -173,7 +192,7 @@ export default function ProfileScreen() {
             label="Log Out"
             color="#DC2626"
             showChevron={false}
-            onPress={() => router.replace("/(auth)/Login")}
+            onPress={handleLogout}
           />
         </MenuGroup>
 
