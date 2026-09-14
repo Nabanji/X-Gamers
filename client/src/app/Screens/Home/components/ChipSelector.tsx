@@ -13,7 +13,7 @@ export function ChipSelector({
 }) {
   return (
     <View className="mb-5">
-      <Text className="text-gray-500 text-sm font-medium mb-2">{label}</Text>
+      <Text className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-2">{label}</Text>
       <View className="flex-row flex-wrap">
         {options.map((option) => {
           const active = selected === option;
@@ -22,9 +22,9 @@ export function ChipSelector({
               key={option}
               onPress={() => onSelect(option)}
               activeOpacity={0.8}
-              className={`px-4 py-2 rounded-full mr-2 mb-2 ${active ? "bg-indigo-600" : "bg-gray-100"}`}
+              className={`px-4 py-2 rounded-full mr-2 mb-2 ${active ? "bg-indigo-600" : "bg-gray-100 dark:bg-gray-800"}`}
             >
-              <Text className={`text-sm font-medium ${active ? "text-white" : "text-gray-600"}`}>
+              <Text className={`text-sm font-medium ${active ? "text-white" : "text-gray-600 dark:text-gray-300"}`}>
                 {option}
               </Text>
             </TouchableOpacity>

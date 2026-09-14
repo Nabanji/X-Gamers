@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { GameSession } from "../types";
-import { getBill } from "../utils/billing";
+import { getBill } from "../utils/sessionBilling";
 
 export function GameBillModal({
   visible,

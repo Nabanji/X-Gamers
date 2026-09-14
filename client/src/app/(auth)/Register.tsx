@@ -114,7 +114,7 @@ export default function Register() {
             <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2">Full name</Text>
             <View className="flex-row items-center bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl px-4">
               <Ionicons name="person-outline" size={19} color="#9CA3AF" />
-              <TextInput value={name} onChangeText={setName} placeholder="James Mwangi" placeholderTextColor="#9CA3AF" autoCapitalize="words" className="flex-1 py-4 px-3 text-gray-950" />
+              <TextInput value={name} onChangeText={setName} placeholder="James Mwangi" placeholderTextColor="#9CA3AF" autoCapitalize="words" className="flex-1 py-4 px-3 text-gray-950 dark:text-white" />
             </View>
           </View>
 
@@ -122,7 +122,7 @@ export default function Register() {
             <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2">Email address</Text>
             <View className="flex-row items-center bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl px-4">
               <Ionicons name="mail-outline" size={19} color="#9CA3AF" />
-              <TextInput value={email} onChangeText={setEmail} placeholder="you@example.com" placeholderTextColor="#9CA3AF" keyboardType="email-address" autoCapitalize="none" autoCorrect={false} className="flex-1 py-4 px-3 text-gray-950" />
+              <TextInput value={email} onChangeText={setEmail} placeholder="you@example.com" placeholderTextColor="#9CA3AF" keyboardType="email-address" autoCapitalize="none" autoCorrect={false} className="flex-1 py-4 px-3 text-gray-950 dark:text-white" />
             </View>
           </View>
 
@@ -130,7 +130,7 @@ export default function Register() {
             <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2">Password</Text>
             <View className="flex-row items-center bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl px-4">
               <Ionicons name="lock-closed-outline" size={19} color="#9CA3AF" />
-              <TextInput value={password} onChangeText={setPassword} placeholder="Create a password" placeholderTextColor="#9CA3AF" secureTextEntry={!showPassword} className="flex-1 py-4 px-3 text-gray-950" />
+              <TextInput value={password} onChangeText={setPassword} placeholder="Create a password" placeholderTextColor="#9CA3AF" secureTextEntry={!showPassword} className="flex-1 py-4 px-3 text-gray-950 dark:text-white" />
               <TouchableOpacity activeOpacity={0.7} onPress={() => setShowPassword((visible) => !visible)} accessibilityLabel={showPassword ? "Hide password" : "Show password"}>
                 <Ionicons name={showPassword ? "eye-off-outline" : "eye-outline"} size={20} color="#9CA3AF" />
               </TouchableOpacity>
@@ -141,7 +141,7 @@ export default function Register() {
             <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2">Confirm password</Text>
             <View className="flex-row items-center bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl px-4">
               <Ionicons name="shield-checkmark-outline" size={19} color="#9CA3AF" />
-              <TextInput value={confirmPassword} onChangeText={setConfirmPassword} placeholder="Repeat your password" placeholderTextColor="#9CA3AF" secureTextEntry={!showConfirmPassword} className="flex-1 py-4 px-3 text-gray-950" />
+              <TextInput value={confirmPassword} onChangeText={setConfirmPassword} placeholder="Repeat your password" placeholderTextColor="#9CA3AF" secureTextEntry={!showConfirmPassword} className="flex-1 py-4 px-3 text-gray-950 dark:text-white" />
               <TouchableOpacity activeOpacity={0.7} onPress={() => setShowConfirmPassword((visible) => !visible)} accessibilityLabel={showConfirmPassword ? "Hide confirmed password" : "Show confirmed password"}>
                 <Ionicons name={showConfirmPassword ? "eye-off-outline" : "eye-outline"} size={20} color="#9CA3AF" />
               </TouchableOpacity>
