@@ -49,18 +49,6 @@ export default function Appearance() {
           })}
         </View>
 
-        <Text className="text-gray-400 text-xs font-semibold uppercase mt-7 mb-2 ml-1">Display</Text>
-        <View className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800">
-          <View className="flex-row items-center justify-between px-4 py-4">
-            <View className="flex-1 pr-4">
-              <Text className="text-gray-950 dark:text-white text-base font-semibold">Compact layout</Text>
-              <Text className="text-gray-400 text-sm mt-0.5">Fit more game details on screen</Text>
-            </View>
-            <View className="w-11 h-6 rounded-full bg-indigo-600 justify-center items-end px-1">
-              <View className="w-4 h-4 rounded-full bg-white" />
-            </View>
-          </View>
-        </View>
       </ScrollView>
     </View>
   );
