@@ -19,7 +19,7 @@ export default function Login() {
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-gray-50"
+      className="flex-1 bg-gray-50 dark:bg-gray-950"
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
       <ScrollView
@@ -32,17 +32,17 @@ export default function Login() {
             <Ionicons name="game-controller" size={28} color="#fff" />
           </View>
 
-          <Text className="text-indigo-600 text-sm font-semibold uppercase tracking-widest">
+          <Text className="text-indigo-600 dark:text-indigo-400 text-sm font-semibold uppercase tracking-widest">
             X-Gaming Hub
           </Text>
-          <Text className="text-gray-950 text-3xl font-bold mt-2">Welcome back</Text>
-          <Text className="text-gray-500 text-base mt-2 leading-6">
+          <Text className="text-gray-950 dark:text-white text-3xl font-bold mt-2">Welcome back</Text>
+          <Text className="text-gray-500 dark:text-gray-400 text-base mt-2 leading-6">
             Sign in to manage your games, players, and daily revenue.
           </Text>
 
           <View className="mt-9">
-            <Text className="text-gray-700 text-sm font-semibold mb-2">Email address</Text>
-            <View className="flex-row items-center bg-white border border-gray-200 rounded-2xl px-4">
+            <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2">Email address</Text>
+            <View className="flex-row items-center bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl px-4">
               <Ionicons name="mail-outline" size={19} color="#9CA3AF" />
               <TextInput
                 value={email}
@@ -52,19 +52,19 @@ export default function Login() {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
-                className="flex-1 py-4 px-3 text-gray-950"
+                className="flex-1 py-4 px-3 text-gray-950 dark:text-white"
               />
             </View>
           </View>
 
           <View className="mt-5">
             <View className="flex-row items-center justify-between mb-2">
-              <Text className="text-gray-700 text-sm font-semibold">Password</Text>
+              <Text className="text-gray-700 dark:text-gray-300 text-sm font-semibold">Password</Text>
               <TouchableOpacity activeOpacity={0.7}>
-                <Text className="text-indigo-600 text-sm font-semibold">Forgot password?</Text>
+                <Text className="text-indigo-600 dark:text-indigo-400 text-sm font-semibold">Forgot password?</Text>
               </TouchableOpacity>
             </View>
-            <View className="flex-row items-center bg-white border border-gray-200 rounded-2xl px-4">
+            <View className="flex-row items-center bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl px-4">
               <Ionicons name="lock-closed-outline" size={19} color="#9CA3AF" />
               <TextInput
                 value={password}
@@ -72,7 +72,7 @@ export default function Login() {
                 placeholder="Enter your password"
                 placeholderTextColor="#9CA3AF"
                 secureTextEntry={!showPassword}
-                className="flex-1 py-4 px-3 text-gray-950"
+                className="flex-1 py-4 px-3 text-gray-950 dark:text-white"
               />
               <TouchableOpacity
                 activeOpacity={0.7}
@@ -96,20 +96,20 @@ export default function Login() {
           </Pressable>
 
           <View className="flex-row items-center my-8">
-            <View className="flex-1 h-px bg-gray-200" />
-            <Text className="text-gray-400 text-xs font-medium mx-4">OR</Text>
-            <View className="flex-1 h-px bg-gray-200" />
+            <View className="flex-1 h-px bg-gray-200 dark:bg-gray-800" />
+            <Text className="text-gray-400 dark:text-gray-500 text-xs font-medium mx-4">OR</Text>
+            <View className="flex-1 h-px bg-gray-200 dark:bg-gray-800" />
           </View>
 
           <View className="flex-row justify-center items-center">
-            <Text className="text-gray-500 text-sm">Don&apos;t have an account?</Text>
+            <Text className="text-gray-500 dark:text-gray-400 text-sm">Don&apos;t have an account?</Text>
             <TouchableOpacity onPress={() => router.push("/(auth)/Register")} activeOpacity={0.7}>
-              <Text className="text-indigo-600 text-sm font-bold ml-1">Sign Up</Text>
+              <Text className="text-indigo-600 dark:text-indigo-400 text-sm font-bold ml-1">Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        <Text className="text-gray-400 text-xs text-center mt-10">
+        <Text className="text-gray-400 dark:text-gray-500 text-xs text-center mt-10">
           Your gaming hub, organized.
         </Text>
       </ScrollView>
