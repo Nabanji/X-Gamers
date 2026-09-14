@@ -11,11 +11,38 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useSignIn } from "@clerk/expo/legacy";
 
 export default function Login() {
+  const { isLoaded, signIn, setActive } = useSignIn();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSignIn = async () => {
+    if (!isLoaded || !signIn || !setActive || isSigningIn) return;
+
+    setErrorMessage("");
+    setIsSigningIn(true);
+
+    try {
+      const result = await signIn.create({ identifier: email.trim(), password });
+
+      if (result.status === "complete" && result.createdSessionId) {
+        await setActive({ session: result.createdSessionId });
+        router.replace("/(tabs)/home");
+      } else {
+        setErrorMessage("Additional verification is required to finish signing in.");
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unable to sign in. Check your details and try again.";
+      setErrorMessage(message);
+    } finally {
+      setIsSigningIn(false);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -89,11 +116,16 @@ export default function Login() {
           </View>
 
           <Pressable
-            onPress={() => router.replace("/(tabs)/home")}
-            className="bg-indigo-600 rounded-2xl py-4 items-center mt-7 active:opacity-80"
+            onPress={handleSignIn}
+            disabled={isSigningIn}
+            className="bg-indigo-600 rounded-2xl py-4 items-center mt-7 active:opacity-80 disabled:opacity-60"
           >
-            <Text className="text-white text-base font-bold">Sign in</Text>
+            <Text className="text-white text-base font-bold">{isSigningIn ? "Signing in..." : "Sign in"}</Text>
           </Pressable>
+
+          {!!errorMessage && (
+            <Text className="text-red-600 text-sm text-center mt-3">{errorMessage}</Text>
+          )}
 
           <View className="flex-row items-center my-8">
             <View className="flex-1 h-px bg-gray-200 dark:bg-gray-800" />

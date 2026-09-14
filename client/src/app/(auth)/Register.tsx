@@ -11,8 +11,10 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useSignUp } from "@clerk/expo/legacy";
 
 export default function Register() {
+  const { isLoaded, signUp, setActive } = useSignUp();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,6 +22,72 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("");
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationPending, setVerificationPending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const finishSignIn = async (sessionId: string | null) => {
+    if (!sessionId || !setActive) return;
+    await setActive({ session: sessionId });
+    router.replace("/(tabs)/home");
+  };
+
+  const handleRegister = async () => {
+    if (!isLoaded || !signUp || !setActive || isRegistering || !acceptedTerms) return;
+
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match.");
+      return;
+    }
+
+    setErrorMessage("");
+    setIsRegistering(true);
+
+    try {
+      const nameParts = name.trim().split(/\s+/);
+      const result = await signUp.create({
+        emailAddress: email.trim(),
+        password,
+        firstName: nameParts[0],
+        lastName: nameParts.slice(1).join(" ") || undefined,
+        legalAccepted: true,
+      });
+
+      if (result.status === "complete") {
+        await finishSignIn(result.createdSessionId);
+      } else if (result.unverifiedFields.includes("email_address")) {
+        await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+        setVerificationPending(true);
+      } else {
+        setErrorMessage("Additional verification is required to finish creating your account.");
+      }
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : "Unable to create your account.");
+    } finally {
+      setIsRegistering(false);
+    }
+  };
+
+  const handleVerify = async () => {
+    if (!signUp || !setActive || !verificationCode.trim() || isVerifying) return;
+
+    setErrorMessage("");
+    setIsVerifying(true);
+    try {
+      const result = await signUp.attemptEmailAddressVerification({ code: verificationCode.trim() });
+      if (result.status === "complete") {
+        await finishSignIn(result.createdSessionId);
+      } else {
+        setErrorMessage("The verification code is not complete yet.");
+      }
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : "Invalid verification code.");
+    } finally {
+      setIsVerifying(false);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -89,8 +157,34 @@ export default function Register() {
             </Text>
           </TouchableOpacity>
 
-          <Pressable onPress={() => router.replace("/(auth)/Login")} className="bg-indigo-600 rounded-2xl py-4 items-center mt-7 active:opacity-80">
-            <Text className="text-white text-base font-bold">Create account</Text>
+          {verificationPending && (
+            <View className="bg-indigo-50 dark:bg-indigo-950 rounded-2xl p-4 mt-5">
+              <Text className="text-indigo-900 dark:text-indigo-100 text-sm font-semibold">Check your email</Text>
+              <Text className="text-indigo-700 dark:text-indigo-200 text-sm mt-1 leading-5">
+                Enter the verification code sent to your email address.
+              </Text>
+              <TextInput
+                value={verificationCode}
+                onChangeText={setVerificationCode}
+                placeholder="Verification code"
+                placeholderTextColor="#9CA3AF"
+                keyboardType="number-pad"
+                className="bg-white dark:bg-gray-900 border border-indigo-200 dark:border-indigo-800 rounded-xl px-4 py-3 mt-3 text-gray-950 dark:text-white"
+              />
+              <TouchableOpacity onPress={handleVerify} disabled={isVerifying} className="bg-indigo-600 rounded-xl py-3 items-center mt-3 disabled:opacity-60">
+                <Text className="text-white font-semibold">{isVerifying ? "Verifying..." : "Verify email"}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
+          {!!errorMessage && <Text className="text-red-600 text-sm text-center mt-3">{errorMessage}</Text>}
+
+          <Pressable
+            onPress={handleRegister}
+            disabled={isRegistering || verificationPending || !acceptedTerms}
+            className="bg-indigo-600 rounded-2xl py-4 items-center mt-7 active:opacity-80 disabled:opacity-60"
+          >
+            <Text className="text-white text-base font-bold">{isRegistering ? "Creating account..." : "Create account"}</Text>
           </Pressable>
 
           <View className="flex-row items-center my-8">
