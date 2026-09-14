@@ -12,11 +12,13 @@ import { StatDetailModal } from "./components/StatDetailModal";
 import { GameBillModal } from "./components/GameBillModal";
 import { NewGameModal } from "./components/NewGameModal";
 import { useGames } from "./GameContext";
+import { useNotifications } from "../../NotificationContext";
 
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const router = useRouter();
-  const { games, setGames } = useGames();
+  const { games, setGames, gameOptions } = useGames();
+  const { unreadCount, addNotification } = useNotifications();
   const [statFilter, setStatFilter] = useState<StatFilter>(null);
   const [statModalVisible, setStatModalVisible] = useState(false);
   const [billModalVisible, setBillModalVisible] = useState(false);
@@ -58,6 +60,13 @@ export default function HomeScreen() {
       { ...session, id: Date.now().toString(), time, createdAt: Date.now(), player1Paid: false, player2Paid: false },
       ...prev,
     ]);
+    addNotification({
+      icon: "checkmark-circle-outline",
+      iconBackground: "bg-green-50 dark:bg-green-950",
+      title: "Game session logged",
+      message: `${session.gameName} at ${session.station} was recorded successfully.`,
+      time: "Just now",
+    });
   };
 
   const recentGames = useMemo(
@@ -97,8 +106,17 @@ export default function HomeScreen() {
             <Text className="text-gray-400 text-sm">Welcome back 👋</Text>
             <Text className="text-black dark:text-white text-2xl font-bold mt-0.5">Game Hub</Text>
           </View>
-          <TouchableOpacity className="w-11 h-11 rounded-full bg-white dark:bg-gray-900 items-center justify-center border border-gray-100 dark:border-gray-800">
+          <TouchableOpacity
+            onPress={() => router.push("/notifications")}
+            accessibilityLabel={unreadCount > 0 ? `${unreadCount} unread notifications` : "Notifications"}
+            className="w-11 h-11 rounded-full bg-white dark:bg-gray-900 items-center justify-center border border-gray-100 dark:border-gray-800"
+          >
             <Ionicons name="notifications-outline" size={20} color="#9CA3AF" />
+            {unreadCount > 0 && (
+              <View className="absolute -right-0.5 -top-0.5 min-w-4 h-4 rounded-full bg-red-600 items-center justify-center px-1">
+                <Text className="text-white text-[10px] font-bold">{unreadCount > 9 ? "9+" : unreadCount}</Text>
+              </View>
+            )}
           </TouchableOpacity>
         </View>
 
@@ -140,7 +158,12 @@ export default function HomeScreen() {
         />
       </ScrollView>
 
-      <NewGameModal visible={modalVisible} onClose={() => setModalVisible(false)} onSubmit={handleAddGame} />
+      <NewGameModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSubmit={handleAddGame}
+        gameOptions={gameOptions.filter((option) => option.active).map((option) => option.name)}
+      />
       <StatDetailModal visible={statModalVisible} filter={statFilter} games={games} onClose={() => setStatModalVisible(false)} />
       <GameBillModal visible={billModalVisible} session={selectedGame} onClose={() => setBillModalVisible(false)} onTogglePayment={togglePlayerPayment} />
     </View>

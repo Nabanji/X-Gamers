@@ -231,6 +231,40 @@ export function GameBillModal({
                   <Text className="text-gray-400 text-xs mt-3">
                     Hourly sessions are charged as one session rather than being split per player.
                   </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      onTogglePayment("player1");
+                      if (session.player1Paid === session.player2Paid) {
+                        onTogglePayment("player2");
+                      }
+                    }}
+                    activeOpacity={0.8}
+                    className={`mt-4 rounded-xl p-3 flex-row items-center justify-between ${
+                      session.player1Paid && session.player2Paid ? "bg-green-50" : "bg-red-50"
+                    }`}
+                  >
+                    <View className="flex-row items-center">
+                      <Ionicons
+                        name={session.player1Paid && session.player2Paid ? "checkmark-circle" : "ellipse-outline"}
+                        size={21}
+                        color={session.player1Paid && session.player2Paid ? "#16A34A" : "#DC2626"}
+                      />
+                      <Text
+                        className={`ml-2 text-sm font-semibold ${
+                          session.player1Paid && session.player2Paid ? "text-green-700" : "text-red-700"
+                        }`}
+                      >
+                        {session.player1Paid && session.player2Paid ? "Payment received" : "Payment unpaid"}
+                      </Text>
+                    </View>
+                    <Text
+                      className={`text-xs font-semibold ${
+                        session.player1Paid && session.player2Paid ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
+                      {session.player1Paid && session.player2Paid ? "Undo" : "Mark Paid"}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               )}
             </ScrollView>
