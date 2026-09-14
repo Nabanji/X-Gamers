@@ -1,9 +1,9 @@
 import { Tabs, Redirect } from "expo-router";
 import { useAuth } from "@clerk/expo";
-import { View, ActivityIndicator } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { BubbleTabBar } from "../components/BubbleTabBar";
 
-export default function TabsLayoutFallback() {
+export default function TabsLayoutAndroid() {
   const { isSignedIn, isLoaded } = useAuth();
 
   if (!isLoaded) {
