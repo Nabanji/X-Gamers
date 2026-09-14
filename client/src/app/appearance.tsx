@@ -20,7 +20,7 @@ export default function Appearance() {
       >
         <TouchableOpacity onPress={() => router.back()} className="flex-row items-center mb-7">
           <Ionicons name="arrow-back" size={22} color="#111827" />
-          <Text className="text-gray-950 dark:text-white text-lg font-bold ml-3">Appearance</Text>
+          <Text className="text-gray-950 dark:text-wshite text-lg font-bold ml-3">Appearance</Text>
         </TouchableOpacity>
 
         <Text className="text-gray-400 text-xs font-semibold uppercase mb-2 ml-1">Theme</Text>

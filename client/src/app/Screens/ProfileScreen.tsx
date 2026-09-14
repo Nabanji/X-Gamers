@@ -139,8 +139,16 @@ export default function ProfileScreen() {
         {/* App */}
         <Text className="text-gray-400 text-xs font-semibold uppercase mb-2 ml-1">App</Text>
         <MenuGroup>
-          <MenuRow icon="notifications-outline" label="Notifications" />
-          <MenuRow icon="game-controller-outline" label="Manage Games" />
+          <MenuRow
+            icon="notifications-outline"
+            label="Notifications"
+            onPress={() => router.push("/notifications")}
+          />
+          <MenuRow
+            icon="game-controller-outline"
+            label="Manage Games"
+            onPress={() => router.push("/manage-games")}
+          />
           <MenuRow
             icon="moon-outline"
             label="Appearance"
@@ -151,7 +159,11 @@ export default function ProfileScreen() {
         {/* Support */}
         <Text className="text-gray-400 text-xs font-semibold uppercase mb-2 ml-1">Support</Text>
         <MenuGroup>
-          <MenuRow icon="document-text-outline" label="Terms & Privacy" />
+          <MenuRow
+            icon="document-text-outline"
+            label="Terms & Privacy"
+            onPress={() => router.push("/terms-privacy")}
+          />
         </MenuGroup>
 
         {/* Logout */}

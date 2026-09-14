@@ -14,17 +14,19 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { GameSession, PaymentType, Winner } from "../types";
-import { GAMES, STATIONS } from "../constants";
+import { STATIONS } from "../constants";
 import { ChipSelector } from "./ChipSelector";
 
 export function NewGameModal({
   visible,
   onClose,
   onSubmit,
+  gameOptions,
 }: {
   visible: boolean;
   onClose: () => void;
   onSubmit: (session: Omit<GameSession, "id" | "time" | "createdAt" | "player1Paid" | "player2Paid">) => void;
+  gameOptions: string[];
 }) {
   const insets = useSafeAreaInsets();
 
@@ -157,7 +159,7 @@ export function NewGameModal({
                 keyboardShouldPersistTaps="handled"
                 contentContainerStyle={{ paddingBottom: 16 }}
               >
-                <ChipSelector label="Game" options={GAMES} selected={game} onSelect={setGame} />
+                <ChipSelector label="Game" options={gameOptions} selected={game} onSelect={setGame} />
                 <ChipSelector label="Station" options={STATIONS} selected={station} onSelect={setStation} />
 
                 <View className="mb-5">
