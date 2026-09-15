@@ -31,7 +31,7 @@ export default function Register() {
   const finishSignIn = async (sessionId: string | null) => {
     if (!sessionId || !setActive) return;
     await setActive({ session: sessionId });
-    router.replace("/(tabs)/home");
+    router.replace("/onboarding");
   };
 
   const handleRegister = async () => {

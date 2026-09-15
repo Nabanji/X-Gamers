@@ -7,7 +7,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Session, PaymentType } from "../types";
-import { STATIONS } from "../constants";
 import { ChipSelector } from "./ChipSelector";
 
 type NewSessionInput = Omit<
@@ -20,11 +19,13 @@ export function OpenSessionModal({
   onClose,
   onSubmit,
   gameOptions,
+  stations,
 }: {
   visible: boolean;
   onClose: () => void;
   onSubmit: (session: NewSessionInput) => void;
   gameOptions: string[];
+  stations: string[];
 }) {
   const insets = useSafeAreaInsets();
 
@@ -117,7 +118,7 @@ export function OpenSessionModal({
                 contentContainerStyle={{ paddingBottom: 4 }}
               >
                 <ChipSelector label="Game" options={gameOptions} selected={game} onSelect={setGame} />
-                <ChipSelector label="Station" options={STATIONS} selected={station} onSelect={setStation} />
+                <ChipSelector label="Station" options={stations} selected={station} onSelect={setStation} />
 
                 <View className="mb-5">
                   <Text className="text-gray-500 text-sm font-medium mb-3">Players</Text>

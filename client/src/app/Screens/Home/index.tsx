@@ -13,7 +13,7 @@ import { useNotifications } from "../../NotificationContext";
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { games, gameOptions, openSession, recordLoss, undoLastRound, closeSession } = useGames();
+  const { games, gameOptions, stations, openSession, recordLoss, undoLastRound, closeSession } = useGames();
   const { unreadCount, addNotification } = useNotifications();
   const [openModalVisible, setOpenModalVisible] = useState(false);
   const [sessionToClose, setSessionToClose] = useState<Session | null>(null);
@@ -110,6 +110,7 @@ export default function HomeScreen() {
         onClose={() => setOpenModalVisible(false)}
         onSubmit={handleOpenSession}
         gameOptions={gameOptions.filter((option) => option.active).map((option) => option.name)}
+        stations={stations}
       />
       <CloseSessionModal
         visible={sessionToClose !== null}
