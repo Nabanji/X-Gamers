@@ -6,7 +6,7 @@ import { useGames } from "./Screens/Home/GameContext";
 
 export default function Onboarding() {
   const { setStationCount } = useGames();
-  const [stationCount, setStationCountInput] = useState("6");
+  const [stationCount, setStationCountInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleContinue = () => {
